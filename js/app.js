@@ -7,6 +7,7 @@ let tamogotchi = class {
         this.hunger = 0;
         this.sleepiness = 0;
         this.bored = 0;
+        this.age = 0;
     }
 }
 
@@ -23,7 +24,7 @@ function petMe() {
 
 function turnOffTheLights() {
     if (myTamogotchi.sleepiness > 2) {
-        myTamogotchi.sleepiness--;
+        myTamogotchi.sleepiness-= 2;
     }
 }
 
@@ -33,11 +34,26 @@ function feedme() {
     }
 }
 
-function age() {
-    if (myTamogotchi.age > 2) {
-        myTamogotchi.age -= 2;
+
+$(".image4").hide();
+
+
+function ageLevel (){
+    myTamogotchi.age++;
+    $(".age").text("Age: "+ myTamogotchi.age)
+    
+    if(myTamogotchi.age > 4){
+        $(".image2").hide();
+        $(".image4").show();
     }
 }
+
+let ageIncrease = setInterval(ageLevel, 2000)
+    
+if (myTamogotchi.age >= 20) {
+        alert("Your Tamagotchi died of old age");
+    }
+
 
 
 function hungerLevel() {
@@ -45,14 +61,14 @@ function hungerLevel() {
     $(".hunger").text("hunger: " + myTamogotchi.hunger);
    petDied();
 }
-let hungerIncrease = setInterval(hungerLevel, 900);
+let hungerIncrease = setInterval(hungerLevel, 1000);
 
 function sleepinessLevel() {
     myTamogotchi.sleepiness += 1;
     $(".sleepiness").text("sleepiness: " + myTamogotchi.sleepiness);
     
 }
-let sleepinessIncrease = setInterval(sleepinessLevel, 900);
+let sleepinessIncrease = setInterval(sleepinessLevel, 1000);
 
 
 function boredLevel() {
@@ -60,7 +76,16 @@ function boredLevel() {
     $(".bored").text("bored: " + myTamogotchi.bored);
    
 }
-let boredIncrease = setInterval(boredLevel, 900);
+let boredIncrease = setInterval(boredLevel, 1000);
+
+
+
+// function ageLevel() {
+//     myTamogotchi.age += 1;
+//     $(".age").text("age: " + myTamogotchi.age);
+   
+// }
+// let ageIncrease = setInterval(ageLevel, 900);
 
 
 
@@ -84,25 +109,42 @@ $(".play").on("click", (e) => {
 
 
 function petDied(){
-    if (myTamogotchi.hunger > 9 || myTamogotchi.sleepiness > 9 || myTamogotchi.bored > 9){
+    if (myTamogotchi.hunger > 10 || myTamogotchi.sleepiness > 10 || myTamogotchi.bored > 10){
         alert("Your Tamogotchi died, Try agian !!")
         clearInterval(boredIncrease);
         clearInterval(sleepinessIncrease);
         clearInterval(hungerIncrease);
+        clearInterval(ageIncrease);
     }
 }
-animateGif();
+
 
 function animateGif() {
     $(".image2").velocity({
-        translateX: [-400, 100]
+        translateX: [-200, 300]
     },
- 
+
         {
-            duration: 3000,
+            duration: 4000,
             delay: 0,
             easing: "linear",
             complate: animateGif,
-            loop: true
+            loop:true
         })
     }
+    animateGif();
+
+    function animateGif1() {
+        $(".image4").velocity({
+            translateX: [-200, 300]
+        },
+    
+            {
+                duration: 4000,
+                delay: 0,
+                easing: "linear",
+                complate: animateGif,
+                loop:true
+            })
+        }
+        animateGif1();
